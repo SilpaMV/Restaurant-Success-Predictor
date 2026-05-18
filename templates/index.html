@@ -1,0 +1,1078 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>
+        AI Restaurant Success Predictor
+    </title>
+
+    <!-- GOOGLE FONT -->
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
+
+    <!-- FONT AWESOME -->
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:'Poppins',sans-serif;
+        }
+
+        body{
+
+            background:
+            linear-gradient(
+            135deg,
+            #020617,
+            #0f172a,
+            #111827
+            );
+
+            color:white;
+            min-height:100vh;
+            overflow-x:hidden;
+        }
+
+        body::before{
+
+            content:'';
+
+            position:fixed;
+
+            width:500px;
+            height:500px;
+
+            background:#38bdf8;
+
+            filter:blur(180px);
+
+            opacity:0.08;
+
+            top:-100px;
+            left:-100px;
+
+            z-index:-1;
+        }
+
+        body::after{
+
+            content:'';
+
+            position:fixed;
+
+            width:450px;
+            height:450px;
+
+            background:#22c55e;
+
+            filter:blur(180px);
+
+            opacity:0.08;
+
+            bottom:-120px;
+            right:-100px;
+
+            z-index:-1;
+        }
+
+        nav{
+
+            width:100%;
+
+            padding:22px 8%;
+
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+
+            background:rgba(255,255,255,0.05);
+
+            backdrop-filter:blur(15px);
+
+            border-bottom:
+            1px solid rgba(255,255,255,0.08);
+
+            position:sticky;
+            top:0;
+            z-index:999;
+        }
+
+        .logo{
+
+            font-size:28px;
+            font-weight:700;
+
+            color:#38bdf8;
+
+            display:flex;
+            align-items:center;
+            gap:12px;
+        }
+
+        .hero{
+
+            padding:30px 8% 60px;
+
+            min-height:auto;
+
+            display:flex;
+            justify-content:center;
+            align-items:flex-start;
+        }
+
+        .container{
+
+            width:100%;
+            max-width:1450px;
+
+            display:grid;
+            grid-template-columns:1fr 1.1fr;
+
+            gap:40px;
+            align-items:flex-start;
+        }
+
+        .hero-text{
+            padding-top:80px;
+
+            animation:fadeUp 1s ease;
+        }
+
+        .tag{
+
+            display:inline-block;
+
+            padding:10px 18px;
+
+            border-radius:30px;
+
+            background:
+            rgba(56,189,248,0.12);
+
+            border:
+            1px solid rgba(56,189,248,0.2);
+
+            color:#38bdf8;
+
+            font-size:14px;
+
+            margin-bottom:25px;
+        }
+
+        .hero-text h1{
+
+            font-size:4rem;
+
+            line-height:1.15;
+
+            margin-bottom:25px;
+        }
+
+        .hero-text span{
+
+            background:
+            linear-gradient(
+            to right,
+            #38bdf8,
+            #22c55e
+            );
+
+            -webkit-background-clip:text;
+            -webkit-text-fill-color:transparent;
+        }
+
+        .hero-text p{
+
+            color:#cbd5e1;
+
+            line-height:1.9;
+
+            margin-bottom:35px;
+
+            max-width:650px;
+        }
+
+        .stats{
+
+            display:flex;
+            gap:25px;
+            flex-wrap:wrap;
+        }
+
+        .stat-card{
+
+            background:
+            rgba(255,255,255,0.05);
+
+            border:
+            1px solid rgba(255,255,255,0.08);
+
+            padding:22px;
+
+            border-radius:20px;
+
+            min-width:180px;
+
+            backdrop-filter:blur(12px);
+
+            transition:0.4s;
+        }
+
+        .stat-card:hover{
+
+            transform:translateY(-8px);
+
+            border-color:#38bdf8;
+        }
+
+        .stat-card h2{
+
+            color:#38bdf8;
+
+            margin-bottom:8px;
+        }
+
+        .glass-card{
+
+            background:
+            rgba(255,255,255,0.06);
+
+            border:
+            1px solid rgba(255,255,255,0.1);
+
+            backdrop-filter:blur(18px);
+
+            border-radius:30px;
+
+            padding:40px;
+
+            box-shadow:
+            0 8px 40px rgba(0,0,0,0.35);
+
+            animation:fadeUp 1.2s ease;
+        }
+
+        .form-title{
+
+            text-align:center;
+
+            margin-bottom:30px;
+        }
+
+        .form-title h2{
+
+            font-size:30px;
+
+            margin-bottom:10px;
+        }
+
+        .form-title p{
+
+            color:#94a3b8;
+
+            font-size:14px;
+        }
+
+        form{
+
+            display:grid;
+
+            grid-template-columns:1fr 1fr;
+
+            gap:22px;
+        }
+
+        .input-group{
+
+            display:flex;
+            flex-direction:column;
+
+            position:relative;
+        }
+
+        .input-group label{
+
+            margin-bottom:10px;
+
+            font-size:14px;
+            font-weight:500;
+
+            color:#e2e8f0;
+        }
+
+        .input-group input,
+        .input-group select{
+
+            padding:15px;
+
+            border-radius:14px;
+
+            border:
+            1px solid rgba(255,255,255,0.08);
+
+            outline:none;
+
+            background:
+            rgba(255,255,255,0.08);
+
+            color:white;
+
+            transition:0.3s;
+        }
+
+        .input-group input:focus,
+        .input-group select:focus{
+
+            border-color:#38bdf8;
+
+            box-shadow:
+            0 0 15px rgba(56,189,248,0.2);
+        }
+
+        select option{
+            color:black;
+        }
+
+        .predict-btn{
+
+            grid-column:span 2;
+
+            padding:18px;
+
+            border:none;
+
+            border-radius:16px;
+
+            background:
+            linear-gradient(
+            to right,
+            #22c55e,
+            #16a34a
+            );
+
+            color:white;
+
+            font-size:18px;
+            font-weight:600;
+
+            cursor:pointer;
+
+            transition:0.4s;
+        }
+
+        .predict-btn:hover{
+
+            transform:translateY(-5px);
+
+            box-shadow:
+            0 12px 30px rgba(34,197,94,0.35);
+        }
+
+        .result-card{
+
+            margin-top:35px;
+
+            padding:28px;
+
+            border-radius:22px;
+
+            background:
+            rgba(56,189,248,0.08);
+
+            border:
+            1px solid rgba(56,189,248,0.2);
+
+            text-align:center;
+        }
+
+        .prediction-score{
+
+            font-size:55px;
+
+            font-weight:700;
+
+            margin-bottom:15px;
+
+            color:#22c55e;
+        }
+
+        .suggestions{
+
+            margin-top:25px;
+
+            background:
+            rgba(255,255,255,0.05);
+
+            border:
+            1px solid rgba(255,255,255,0.08);
+
+            padding:25px;
+
+            border-radius:20px;
+        }
+
+        .dropdown{
+
+            display:none;
+
+            position:absolute;
+
+            top:100%;
+            left:0;
+
+            width:100%;
+
+            background:white;
+
+            color:black;
+
+            border-radius:12px;
+
+            overflow:hidden;
+
+            margin-top:8px;
+
+            max-height:180px;
+
+            overflow-y:auto;
+
+            z-index:999;
+        }
+
+        .dropdown div{
+
+            padding:12px;
+
+            cursor:pointer;
+
+            transition:0.2s;
+        }
+
+        .dropdown div:hover{
+
+            background:#f1f5f9;
+        }
+
+        .chips{
+
+            margin-top:12px;
+        }
+
+        .chip{
+
+            display:inline-block;
+
+            background:
+            linear-gradient(
+            to right,
+            #38bdf8,
+            #0ea5e9
+            );
+
+            padding:8px 14px;
+
+            border-radius:30px;
+
+            margin:4px;
+
+            font-size:13px;
+
+            cursor:pointer;
+        }
+
+        footer{
+
+            padding:35px;
+
+            text-align:center;
+
+            border-top:
+            1px solid rgba(255,255,255,0.08);
+
+            color:#94a3b8;
+        }
+
+        @keyframes fadeUp{
+
+            from{
+                opacity:0;
+                transform:translateY(30px);
+            }
+
+            to{
+                opacity:1;
+                transform:translateY(0);
+            }
+        }
+
+        @media(max-width:1100px){
+
+            .container{
+                grid-template-columns:1fr;
+            }
+
+            .hero-text{
+                text-align:center;
+            }
+
+            .stats{
+                justify-content:center;
+            }
+
+            form{
+                grid-template-columns:1fr;
+            }
+
+            .predict-btn{
+                grid-column:span 1;
+            }
+        }
+
+        @media(max-width:768px){
+
+            .hero{
+                padding:40px 5%;
+            }
+
+            .hero-text h1{
+                font-size:2.7rem;
+            }
+
+            .glass-card{
+                padding:25px;
+            }
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<nav>
+
+    <div class="logo">
+
+        <i class="fa-solid fa-utensils"></i>
+
+        AI Restaurant Predictor
+
+    </div>
+
+</nav>
+
+<section class="hero">
+
+    <div class="container">
+
+        <!-- LEFT -->
+
+        <div class="hero-text">
+
+            <div class="tag">
+                🚀 AI Powered Restaurant Intelligence
+            </div>
+
+            <h1>
+
+                Predict
+                <span>Restaurant Success</span>
+                Using Machine Learning
+
+            </h1>
+
+            <p>
+
+                Advanced AI-powered restaurant analytics platform
+                designed to predict restaurant ratings and business
+                performance using Machine Learning, feature engineering,
+                predictive analytics and intelligent recommendation systems.
+
+            </p>
+
+            <div class="stats">
+
+                <div class="stat-card">
+
+                    <h2>AI Model</h2>
+
+                    <p>
+                        XGBoost Prediction Engine
+                    </p>
+
+                </div>
+
+                <div class="stat-card">
+
+                    <h2>ML Pipeline</h2>
+
+                    <p>
+                        Feature Engineered Workflow
+                    </p>
+
+                </div>
+
+                <div class="stat-card">
+
+                    <h2>Analytics</h2>
+
+                    <p>
+                        Data-Driven Business Insights
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- RIGHT -->
+
+        <div class="glass-card">
+
+            <div class="form-title">
+
+                <h2>
+
+                    <i class="fa-solid fa-chart-line"></i>
+
+                    Restaurant Details
+
+                </h2>
+
+                <p>
+
+                    Fill all restaurant information
+                    for AI-powered prediction
+
+                </p>
+
+            </div>
+
+            <!-- FORM -->
+
+            <form method="POST"
+                  action="/predict">
+
+                <div class="input-group">
+
+                    <label>City</label>
+
+                    <input type="text"
+                           name="city"
+                           required>
+
+                </div>
+
+                <div class="input-group">
+
+                    <label>Cost For Two</label>
+
+                    <input type="number"
+                           name="cost"
+                           required>
+
+                </div>
+
+                <div class="input-group">
+
+                    <label>Cuisine Count</label>
+
+                    <input type="number"
+                           name="cuisine_count"
+                           required>
+
+                </div>
+
+                <!-- CUISINE -->
+
+                <div class="input-group"
+                     style="grid-column:span 2;">
+
+                    <label>Cuisines</label>
+
+                    <input type="text"
+                           id="cuisineInput"
+                           placeholder="Type cuisine & press Enter"
+                           onclick="showDropdown()"
+                           onkeydown="addManualCuisine(event)">
+
+                    <div id="dropdown"
+                         class="dropdown">
+
+                        <div onclick="selectCuisine('North Indian')">
+                            North Indian
+                        </div>
+
+                        <div onclick="selectCuisine('South Indian')">
+                            South Indian
+                        </div>
+
+                        <div onclick="selectCuisine('Chinese')">
+                            Chinese
+                        </div>
+
+                        <div onclick="selectCuisine('Italian')">
+                            Italian
+                        </div>
+
+                        <div onclick="selectCuisine('Arabian')">
+                            Arabian
+                        </div>
+
+                        <div onclick="selectCuisine('Fast Food')">
+                            Fast Food
+                        </div>
+
+                        <div onclick="selectCuisine('Biriyani')">
+                            Biriyani
+                        </div>
+
+                    </div>
+
+                    <div id="selected_cuisines"
+                         class="chips"></div>
+
+                    <input type="hidden"
+                           name="cuisine"
+                           id="cuisine_hidden">
+
+                </div>
+
+                <div class="input-group">
+
+                    <label>Online Order</label>
+
+                    <select name="order_online">
+
+                        <option value="1">Yes</option>
+                        <option value="0">No</option>
+
+                    </select>
+
+                </div>
+
+                <div class="input-group">
+
+                    <label>Table Booking</label>
+
+                    <select name="book_table">
+
+                        <option value="1">Yes</option>
+                        <option value="0">No</option>
+
+                    </select>
+
+                </div>
+
+                <div class="input-group">
+
+                    <label>Delivery Available</label>
+
+                    <select name="delivery_available">
+
+                        <option value="1">Yes</option>
+                        <option value="0">No</option>
+
+                    </select>
+
+                </div>
+
+                <div class="input-group">
+
+                    <label>Dine-In Available</label>
+
+                    <select name="dinein_available">
+
+                        <option value="1">Yes</option>
+                        <option value="0">No</option>
+
+                    </select>
+
+                </div>
+
+                <div class="input-group">
+
+                    <label>City Population</label>
+
+                    <input type="number"
+                           name="city_population"
+                           required>
+
+                </div>
+
+                <div class="input-group">
+
+                    <label>City Area (km²)</label>
+
+                    <input type="number"
+                           name="city_area_km"
+                           required>
+
+                </div>
+
+                <div class="input-group">
+
+                    <label>Tourism Area</label>
+
+                    <select name="tourism_flag">
+
+                        <option value="1">Yes</option>
+                        <option value="0">No</option>
+
+                    </select>
+
+                </div>
+
+                <div class="input-group">
+
+                    <label>GDP Area</label>
+
+                    <select name="gdp_flag">
+
+                        <option value="1">Yes</option>
+                        <option value="0">No</option>
+
+                    </select>
+
+                </div>
+
+                <button class="predict-btn"
+                        type="submit">
+
+                    <i class="fa-solid fa-brain"></i>
+
+                    Predict Restaurant Rating
+
+                </button>
+
+            </form>
+
+            <!-- RESULT -->
+
+            {% if prediction_score %}
+
+            <div class="result-card">
+
+                <h2>
+                    Prediction Result
+                </h2>
+
+                <div class="prediction-score">
+
+                    ⭐ {{ prediction_score }}
+
+                </div>
+
+                <p style="
+                color:#cbd5e1;
+                line-height:1.8;">
+
+                    AI-powered restaurant rating prediction
+                    generated using Machine Learning.
+
+                </p>
+
+            </div>
+
+            {% endif %}
+
+            <!-- AI SUGGESTIONS -->
+
+            {% if suggestions %}
+
+            <div class="suggestions">
+
+                <h3 style="
+                margin-bottom:15px;
+                color:#38bdf8;">
+
+                    AI Business Suggestions
+
+                </h3>
+
+                <pre style="
+                white-space:pre-wrap;
+                color:#e2e8f0;
+                font-family:Poppins;
+                line-height:1.8;
+                ">{{ suggestions }}</pre>
+
+            </div>
+
+            {% endif %}
+
+            <!-- ERROR -->
+
+            {% if error %}
+
+            <div class="suggestions"
+                 style="
+                 border-left:5px solid red;">
+
+                <h3 style="color:red;">
+                    Error
+                </h3>
+
+                <p>{{ error }}</p>
+
+            </div>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</section>
+
+<footer>
+
+    <p>
+        © 2026 AI Restaurant Success Predictor
+    </p>
+
+    <p style="
+    margin-top:10px;
+    font-size:14px;">
+
+        Built using Flask,
+        XGBoost,
+        Machine Learning &
+        Predictive Analytics
+
+    </p>
+
+</footer>
+
+<script>
+
+    let selected = [];
+
+    function showDropdown(){
+
+        document.getElementById(
+        "dropdown"
+        ).style.display = "block";
+    }
+
+    function hideDropdown(){
+
+        document.getElementById(
+        "dropdown"
+        ).style.display = "none";
+    }
+
+    function selectCuisine(cuisine){
+
+        if(!selected.includes(cuisine)){
+
+            selected.push(cuisine);
+
+            renderChips();
+        }
+
+        hideDropdown();
+    }
+
+    function removeCuisine(item){
+
+        selected =
+        selected.filter(c => c !== item);
+
+        renderChips();
+    }
+
+    function renderChips(){
+
+        let container =
+        document.getElementById(
+        "selected_cuisines"
+        );
+
+        container.innerHTML = "";
+
+        selected.forEach(item => {
+
+            let chip =
+            document.createElement("span");
+
+            chip.className = "chip";
+
+            chip.innerText =
+            item + " ✖";
+
+            chip.onclick =
+            () => removeCuisine(item);
+
+            container.appendChild(chip);
+        });
+
+        document.getElementById(
+        "cuisine_hidden"
+        ).value = selected.join(",");
+    }
+
+    function addManualCuisine(event){
+
+        if(event.key === "Enter"){
+
+            event.preventDefault();
+
+            let input =
+            document.getElementById(
+            "cuisineInput"
+            );
+
+            let val =
+            input.value.trim();
+
+            if(val && !selected.includes(val)){
+
+                selected.push(val);
+
+                renderChips();
+            }
+
+            input.value = "";
+
+            hideDropdown();
+        }
+    }
+
+    document.addEventListener("click", function(event){
+
+        let dropdown =
+        document.getElementById("dropdown");
+
+        let input =
+        document.getElementById("cuisineInput");
+
+        if(
+            !dropdown.contains(event.target)
+            &&
+            event.target !== input
+        ){
+
+            hideDropdown();
+        }
+
+    });
+
+</script>
+
+</body>
+</html>
