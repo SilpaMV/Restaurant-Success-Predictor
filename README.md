@@ -264,7 +264,8 @@ Restaurant-Success-Predictor/
 # 📸 Project Screenshots
 
 ## 🏠 Home Dashboard
-(Add your screenshot here)
+<img width="1366" height="1515" alt="homepage" src="https://github.com/user-attachments/assets/467508a9-c9c6-4056-be47-0a671a873956" />
+
 
 ```md
 ![Home Page](screenshots/homepage.png)
@@ -273,7 +274,8 @@ Restaurant-Success-Predictor/
 ---
 
 ## 📈 Prediction Result
-(Add your result screenshot here)
+<img width="575" height="841" alt="result" src="https://github.com/user-attachments/assets/153ebbdb-2336-476c-962c-bfceb4733b83" />
+
 
 ```md
 ![Prediction Result](screenshots/result.png)
@@ -283,7 +285,7 @@ Restaurant-Success-Predictor/
 
 # 🎥 Project Demo Video
 
-Upload your demo video inside GitHub repository and use:
+https://github.com/user-attachments/assets/b617e8a9-3a43-4e0c-9eb5-46dfce063431
 
 ```md
 [▶ Watch Demo Video](demo/demo_video.mp4)
